@@ -1,109 +1,63 @@
-UnoJoy
-======
+# 🕹️ pawBox + UnoJoy
+## Custom Arcade Controller Firmware
+### Supports two analog sticks, Four SOCD cleaning, and allows switching between analog and digital movement
 
-	UnoJoy! allows you to easily turn an Arduino Uno (or Mega or Leonardo) into a PS3-compatible USB game controller
+**Documentation in progress**  
+Website: [pawbox.com.ar](https://pawbox.com.ar)
 
+<p align="center">
+  <img src="./pawBoxV2/pawbox_v2.png" alt="Best layout" width="500">
+</p>
 
-Getting Started
-===============
+How to use:
 
-	Hi there!  Welcome to using UnoJoy!
+1)Upload the firmware pawBoxV2.ino to your PCB
 
-	UnoJoy lets you use a plain, unmodified Arduino Uno
-	to create native USB joysticks.  It is a three-part system:
-
-	Drivers - Needed to re-flash the Arduino's USB communication chip
-	Software - The UnoJoy library for Arduino
-	Firmware - Code to load onto Arduino's USB communication chip
-
-	In order to make UnoJoy work, you'll need to take care of
-	all three parts.  We're here to make that process as easy as
-	possible.
+2)Set the pins as follows:
 
 
-	Drivers
-	=======
-
-	In the UnoJoy directory, there are installer files for the drivers
-	you'll need for the DFU bootloader.  Choose the correct one for your OS:
-	WindowsUnoJoyDriverInstaller.exe
-	LionUnoJoyDrivers.pkg
-	SnowLeopardUnoJoyDrivers.pkg
-
-	On Windows, you'll also need to download and install Atmel's FLIP tool:
-	https://www.microchip.com/developmenttools/ProductDetails/flip
-
-	On Linux you'll need to install dfu-programmer. you can get it by typing to your terminal:
-	sudo apt-get install dfu-programmer
-	or
-	sudo aptitude install dfu-programmer 
-	depending on your distribution.
-	You can also build it from source: https://github.com/dfu-programmer/dfu-programmer
-	You also have to make the flashing script runnable by typing:
-	chmod +x TurnIntoAJoystick.sh
-	into your terminal when in UnoJoy directory.
 
 
-	Software
-	========
+| Pin | PS Button  | Xbox Button  | Type    |
+|-----|------------|-------------|----------|
+| 2   | L2         | LT          | Digital  |
+| 3   | R2         | RT          | Digital  |
+| 4   | L1         | LB          | Digital  |
+| 5   | R1         | RB          | Digital  |
+| 6   | Circle     | B / 4       | Digital  |
+| 7   | Cross      | A / 3       | Digital  |
+| 8   | Triangle   | Y / 2       | Digital  |
+| 9   | Square     | X / 1       | Digital  |
+| 10  | Up         | Arriba      | Digital  |
+| 11  | Right      | Derecha     | Digital  |
+| 12  | Down       | Abajo       | Digital  |
+| 13  | Left       | Izquierda   | Digital  |
+| A5  | L3         | L3          | Analog   |
+| A4  | R3         | R3          | Analog   |
+| A3  | Y Axis     | L Stick     | Analog   |
+| A2  | X Axis     | L Stick     | Analog   |
+| A1  | Y Axis     | R Stick     | Analog   |
+| A0  | X Axis     | R Stick     | Analog   |
 
-	To get started, first, go to the UnoJoyArduinoSample
-	folder. Open up UnoJoyArduinoSample and upload that code
-	to your Arduino.
+As you can see, the PCB is limited in the number of available inputs.
+But don’t worry — you can activate hidden buttons with the following combinations:
 
-	Next, test to make sure that it's working, we have a Processing
-    sketch to test your controller without having to cycle through
-	the process of going reflashing the firmware back and forth.
-	Go to https://processing.org/ to download and install Processing.
-	Then you can run the UnoJoyProcessingVisualizer sketch.
-	
-	*Note* You'll need to install the ControlP5 library in order
-	for the UnoJoyProcessingVisualizer to work. To install that,
-	in Processing, go to Sketch -> Import Library -> Add Library...
-	search for ControlP5, install it, then possibly restart Processing.
-	
-	*Second Note* The compiled stand-alone processing applications seem
-	to have stopped working, and with Java being a pain, they're not currently
-	being supported. 
-	
-	You should see a representation of the controller, and if you
-	ground any of the pins between 2 and 12, you should see
-	buttons on the controller light up.  Now, we move onto the hardware!
+| Function 	| Button Combination |
+|-----------|--------------------|
+| Select 	| L3 + R3 + R2 |
+| Start  	| L3 + R3 + L2 |
+| Home   	| L3 + R3 + R2 + L2 *(or Select + Start)* |
 
+3)Put your PCB into DFU mode.
 
-	Hardware
-	========
+How to put your Arduino into DFU mode:
+    Short two of the pins on the block of six pins located next to the USB connector.
+    Using a small wire or metal object, connect the two pins closest to the USB connector together.
 
-	Now that we have the proper code on the Arduino, we need
-	to reprogram the communications chip on the Arduino.
-	In order to do this, you need to first put the Arduino
-	into 'Arduino UNO DFU' mode. The official documentation
-	for this is here
+ONCE YOU ARE IN DFU MODE:
 
-	http://arduino.cc/en/Hacking/DFUProgramming8U2
+4)Run TurnIntoAJoystick.bat (you may need to install Atmel Flip).
 
-	----HOW TO PUT YOUR ARDUINO INTO DFU MODE----
-	You do that by shorting two of the pins on the block of 6 pins between
-	the USB connector.  Using a piece of wire or other small metal object,
-	connect the 2 pins closes to the USB connector together.
-	(the ones that turn from o to | in the diagram)
-
-						  ---->
-			o o o           |        | o o 
-	----|   o o o           |----|   | o o
-		|                   |    |     
-	USB |                   |USB |      
-		|                   |    |   
-	----|                   |----|
-							|
-	It should disconnect (be-dun.) and reconnect (buh-din!) 
-	and now show up to your system as 'Arduino UNO DFU'.
-	In OSX, you will get no feedback from your computer, but
-	the lights on the Arduino will stop flashing.
-
-
-	ONCE YOU ARE IN DFU MODE
-	========================
 
 	Once the Arduino is in DFU mode, to update the firmware, simply click:
 
@@ -118,63 +72,14 @@ Getting Started
 	the new firmware - it'll just hang out in DFU mode until you do.
 
 	When you plug the Arduino in again now, it will show up to your
-	computer as an 'UnoJoy Joystick'.  You can check this by doing
+	computer as an 'pawbox Joystick'.  You can check this by doing
 	the steps in the next section.
 
-	HOW TO CHECK WHICH MODE YOU ARE IN
-	==================================
+5)To revert your Arduino back to its original firmware,run TurnIntoAnArduino.bat 
+Remember to put the board into DFU mode before updating.
 
-	On Windows 7, you can check it out by going to
-		Start->Devices and Printers
-		and you should see it there under 'Unspecified'
-		In Arduino mode, it will appear as 'Arduino UNO (COM 23)'
-		In DFU mode, it will appear as 'Arduino UNO DFU'
-		In UnoJoy mode, it will appear at the top as 'UnoJoy Joystick'
 
-	On OSX, you should see it:
-		Snow Leopard: Apple->About This Mac->More Info...->USB
-		Lion: Apple->About This Mac->More Info...->System Report->USB
-		You may need to refresh (command-R) to see it update.
-		In Arduino mode, it will appear as 'Arduino UNO'
-		In DFU mode, it will appear as 'Arduino UNO DFU'
-		In UnoJoy mode, it will appear at the top as 'UnoJoy Joystick'
-	
-	On Linux, you can type lsusb to your terminal.
-		In response you'll get list of all connected usb devices.
-		From there you should find:
-		In Arduino mode, you should see  a device named Arduino Uno etc.
-		In DFU mode, you should see  a device named Atmel corp. etc.
-		In UnoJoy mode, you should see a device named Cygnal Integrated Products etc.
-  		**Update**
-		As of 2021, there has been success using the [jstest-gtk](https://manpages.ubuntu.com/manpages/bionic/man1/jstest-gtk.1.html)
-  		tool to test the joystick once it has been turned into a joystick
 
-		
-Using the Deployment Collators
-==============================
-	There are a couple of programs for creating a quick release zip file.
-	The OSX one may or may not work; I haven't had a Mac in years so I haven't tested it.
-	To use the Windows one, you'll need to install 7zip (https://www.7-zip.org/),
-	then add it to your system or user path (search for Environment Variables, then edit
-	the Path variable and add the 7zip folder). Then you should just be able to use
-	Windows Deployment Collator.bat.
 
-Steering Wheel Update, courtesy of Mustavfa Cem Avci
-====
-	With this update you can now make your own steering wheel and pedal set for the racing game 
-	you always wanted to play with controller!
-	
-	You need an MPU6050 IMU sensor for this project, simply connect SDA and SCL pins to A4 and A5 respectively,
-	VCC -> 5V GND->GND
-	
-	or you can use the SDA SCL pins on Arduino close to the GND pin if you need more analog inputs.
-        You can find the program for the gaming 900 degree wheel set on the UnoJoySteeringWheel folder.
-	Upload the program and follow the instructions!
-	
-	Feel free to contact me for any problems on the program : cem.avci@gazi.edu.tr
-	Mustafa Cem Avci, 17/06/2020
-	LONG LIVE OPEN SOURCE!  
-	
-	YouTube: https://www.youtube.com/watch?v=Rq2QivBzshs
-	
+
 
