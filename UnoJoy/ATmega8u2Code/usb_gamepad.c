@@ -53,18 +53,19 @@
  **************************************************************************/
 
 // You can change these to give your code its own name.
-#define STR_MANUFACTURER	L"OpenChord X RMIT Exertion Games Lab"
-#define STR_PRODUCT			L"UnoJoy Joystick"
-//#define STR_MANUFACTURER	L"SEGA"
-//#define STR_PRODUCT		L"VIRTUA STICK High Grade"
+#define STR_MANUFACTURER	L"GamesLab Argentina"
+#define STR_PRODUCT			L"pawBox 14"
 
 
 // Mac OS-X and Linux automatically load the correct drivers.  On
 // Windows, even though the driver is supplied by Microsoft, an
 // INF file is needed to load the driver.  These numbers need to
 // match the INF file.
-#define VENDOR_ID		0x10C4
-#define PRODUCT_ID		0x82C0
+
+
+//ps3 joystick base
+#define VENDOR_ID		0x0E6F
+#define PRODUCT_ID		0x0128
 
 
 // USB devices are supposed to implement a halt feature, which is
@@ -197,7 +198,7 @@ static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
 	1,					// bConfigurationValue
 	0,					// iConfiguration
 	0x80,					// bmAttributes
-	50,					// bMaxPower
+	250,					// bMaxPower
 	// interface descriptor, USB spec 9.6.5, page 267-269, Table 9-12
 	9,					// bLength
 	4,					// bDescriptorType
