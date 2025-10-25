@@ -39,9 +39,8 @@ byte DownPin = 12;
 byte l3 = A5;
 byte r3 = A4;
 
-//firmware with just the right analog stick
-byte RightX =A0;
-byte RightY =A1;
+//byte RightX =A0;
+//byte RightY =A1;
 //byte LeftX =A2;
 //byte LeftY =A3;
 byte StartPin = A2;
@@ -105,10 +104,9 @@ dataForController_t getBaseControllerData() {
     controllerData.r2On       = !digitalRead(r2);
 
     // no analog sticks in this firmware
-
+    /*
     controllerData.rightStickX = analogRead(RightX) >> 2;
     controllerData.rightStickY = analogRead(RightY) >> 2;
-    /*
     controllerData.leftStickX  = analogRead(LeftX) >> 2;
     controllerData.leftStickY  = analogRead(LeftY) >> 2;
     */
