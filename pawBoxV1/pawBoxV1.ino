@@ -39,10 +39,12 @@ byte DownPin = 12;
 byte l3 = A5;
 byte r3 = A4;
 
-byte RightX =A0;
-byte RightY =A1;
-byte LeftX =A2;
-byte LeftY =A3;
+//byte RightX =A0;
+//byte RightY =A1;
+//byte LeftX =A2;
+//byte LeftY =A3;
+byte StartPin = A2;
+byte SelectPin = A3;
 
 
 
@@ -64,6 +66,11 @@ void setupPins(void){
   digitalWrite(l3, HIGH); // Activa la resistencia pull-up
   pinMode(r3, INPUT); // Configura el pin como entrada
   digitalWrite(r3, HIGH); // Activa la resistencia pull-up
+
+  pinMode(SelectPin, INPUT); // Configura el pin como entrada
+  digitalWrite(SelectPin, HIGH); // Activa la resistencia pull-up
+  pinMode(StartPin, INPUT); // Configura el pin como entrada
+  digitalWrite(StartPin, HIGH); // Activa la resistencia pull-up
 
 
 }
@@ -96,16 +103,19 @@ dataForController_t getBaseControllerData() {
     controllerData.r1On       = !digitalRead(r1);
     controllerData.r2On       = !digitalRead(r2);
 
-    // Sticks
+    // no analog sticks in this firmware
+    /*
     controllerData.rightStickX = analogRead(RightX) >> 2;
     controllerData.rightStickY = analogRead(RightY) >> 2;
     controllerData.leftStickX  = analogRead(LeftX) >> 2;
     controllerData.leftStickY  = analogRead(LeftY) >> 2;
+    */
 
   // Leer el valor analógico del pin
   int analogValuel3 = analogRead(l3);
   int analogValuer3 = analogRead(r3);
-
+  int analogValueSelect = analogRead(SelectPin);
+  int analogValueStart = analogRead(StartPin);
 
   // Determinar si el botón está presionado
   bool buttonPressedl3 = analogValuel3 < threshold;
@@ -179,7 +189,8 @@ dataForController_t getBaseControllerData() {
     } else {
       r1WasPressed = false;
     }
-
+    //no need to use combo activation for start and select
+    /*
     if ( !digitalRead(l2) && !digitalRead(r2)){ //home button activation
       controllerData.l2On = 0;
       controllerData.r2On = 0;
@@ -202,6 +213,7 @@ dataForController_t getBaseControllerData() {
           controllerData.selectOn = 1;
         }
     }
+    */
 
   }else{
     comboActive = false;
@@ -212,6 +224,23 @@ dataForController_t getBaseControllerData() {
       controllerData.r3On=1;
     }
 
+  }
+
+  
+  // Determinar si el botón está presionado
+  bool buttonPressedSelect = analogValueSelect < threshold;
+  bool buttonPressedStart = analogValueStart < threshold;
+  // Hacer algo si el botón está presionado  
+  if (buttonPressedSelect && buttonPressedStart) {
+    controllerData.homeOn=1;
+  }else{
+    if (buttonPressedStart) {
+      controllerData.startOn=1;
+    }
+
+    if (buttonPressedSelect) {
+      controllerData.selectOn=1;
+    }
   }
 
     return controllerData;
