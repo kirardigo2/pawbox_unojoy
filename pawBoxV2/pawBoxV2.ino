@@ -2,7 +2,7 @@
 #include <EEPROM.h>
 
 byte socdMode = 0;   // Guardará 1 a 4 según la configuración
-byte stickMode = 0;  // Guardará 1 o 2 según Left-stick o D-Pad
+byte stickMode = 0;  // Guardará 1 para movimiento analogico o 2 para movimiento digital
 
 byte socdAddress = 0;  // Dirección en la EEPROM donde se almacenará el socd mode
 byte stickAddress = 1; // Dirección en la EEPROM donde se almacenará el movimiento digital(d-pad) o analogico (left stick)
