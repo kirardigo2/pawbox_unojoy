@@ -5,10 +5,6 @@
 **Documentation in progress**  
 Website: [pawbox.com.ar](https://pawbox.com.ar)
 
-<p align="center">
-  <img src="./pawBoxV2/pawbox_v2.png" alt="Best layout" width="500">
-</p>
-
 How to use:
 
 1)Upload the firmware pawBoxV2.ino to your PCB
